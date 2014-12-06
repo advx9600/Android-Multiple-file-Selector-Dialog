@@ -21,6 +21,8 @@ import com.commonsware.cwac.merge.MergeAdapter;
 
 public class FileSelectionActivity extends Activity {
 
+    public static final String  EXTRA_SET_PATH="set_path";
+
     private static final String TAG = "FileSelection";
     private static final String FILES_TO_UPLOAD = "upload";
     File mainPath = new File(Environment.getExternalStorageDirectory()+"");
@@ -50,9 +52,8 @@ public class FileSelectionActivity extends Activity {
         setContentView(R.layout.activity_file_selection);
         //getActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
-
+        setExtraData();
+        
         directoryView = (ListView)findViewById(R.id.directorySelectionList);
         ok = (Button)findViewById(R.id.ok);
         all = (Button)findViewById(R.id.all);
@@ -147,6 +148,15 @@ public class FileSelectionActivity extends Activity {
         });
     }
 
+    private void setExtraData(){
+    	String path=getIntent().getStringExtra(EXTRA_SET_PATH);
+    	if (path == null || path.length()==0){
+    		mainPath = new File(Environment.getExternalStorageDirectory()+"");
+    	}else{
+    		mainPath = new File(path);
+    	}
+    }
+    
     public void onBackPressed() {
         try {
             if(mainPath.equals(Environment.getExternalStorageDirectory().getParentFile().getParentFile())){
