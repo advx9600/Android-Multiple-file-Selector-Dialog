@@ -22,6 +22,7 @@ import com.commonsware.cwac.merge.MergeAdapter;
 public class FileSelectionActivity extends Activity {
 
     public static final String  EXTRA_SET_PATH="set_path";
+    public static final String  EXTRA_SET_FILE = "set_file";
 
     private static final String TAG = "FileSelection";
     private static final String FILES_TO_UPLOAD = "upload";
@@ -64,6 +65,7 @@ public class FileSelectionActivity extends Activity {
 
 
         loadLists();
+        setListPosition();
         New.setEnabled(false);
 
 
@@ -148,6 +150,18 @@ public class FileSelectionActivity extends Activity {
         });
     }
 
+    private void setListPosition() {
+		String extraFileName = getIntent().getStringExtra(EXTRA_SET_FILE);
+		if (extraFileName != null && extraFileName.length() > 0) {
+			for (int i = 0; i < fileNames.size(); i++) {
+				if (fileNames.get(i).equals(extraFileName)) {
+					directoryView.setSelection(directoryNames.size() + i);
+					break;
+				}
+			}
+		}
+	}
+	
     private void setExtraData(){
     	String path=getIntent().getStringExtra(EXTRA_SET_PATH);
     	if (path == null || path.length()==0){
